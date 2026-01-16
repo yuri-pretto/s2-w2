@@ -118,9 +118,36 @@ public class Sound {
   
     //complete this method
     public void amplify (double amt) {
+        for(int i = 0; i < myData.size() - 1; i++){
+            int x = myData.get(i);
+            myData.set(i, (int)(x*amt));
+        }
+    }
 
+    public int findMax(){
+        int max = 0;
+        for(int i = 0; i < myData.size() - 1; i++){
+            if(Math.abs(myData.get(i))>max)
+                max = Math.abs(myData.get(i));
+        }
+        return max;
+    }
+
+    public void normalize(){
+        int max = findMax();
+        amplify(32000/(max*1.0));
+        refresh();
     }
     
+    public void reverse(){
+       ArrayList<Integer> temp = new ArrayList<>();
+        for(int i = 0; i < myData.size() - 1; i++){
+          temp.add(myData.remove(i));
+        }
+        for(int i = myData.size()-1; i > 0; i--){
+            myData.add(temp.remove(i));
+        }
+    }
     
     public void setToIndex() {
         for(int i =0; i < 32768; i++) {
@@ -147,4 +174,4 @@ public class Sound {
 
 
 
-} // end Sound class
+}
